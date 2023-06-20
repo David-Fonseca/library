@@ -44,8 +44,8 @@ function Book(title, author, numberOfPages, status){
     }
 }
 
-function addBookToLibrary(event){
-    event.preventDefault();
+function addBookToLibrary(){
+    
 
     let title = document.getElementById('title').value;
     let author = document.getElementById('author').value;
@@ -109,12 +109,49 @@ function populateLibrary(book){
     });
 }
 
+function checkFormValidity(){
+    let formTitle=document.querySelector('#title');
+    let authorName=document.querySelector('#author');
+    let numberOfPages=document.querySelector('#numberOfPages');
+    let submitFlag=true;
+    if (!formTitle.checkValidity()){
+        formTitle.style.borderColor='red';
+        submitFlag=false;
+    }
+    else{
+        formTitle.style.borderColor='green';
+    }
+    if (!authorName.checkValidity()){
+        authorName.style.borderColor='red';
+        submitFlag=false;
+    }
+    else{
+        authorName.style.borderColor='green';
+    }
+    if (!numberOfPages.checkValidity()){
+        numberOfPages.style.borderColor='red';
+        submitFlag=false;
+    }
+    else{
+        numberOfPages.style.borderColor='green';
+    }
+    return submitFlag;
+    
+}
 const addBookBtn = document.querySelector('.add');
 const enterBookBtn = document.querySelector('.submitBook');
 const cancelBtn =document.querySelector('.cancelButton');
 
 addBookBtn.addEventListener('click', openPopup);
-enterBookBtn.addEventListener('click', addBookToLibrary);
+enterBookBtn.addEventListener('click', (e)=>{
+    e.preventDefault();
+    let bookIsValid = checkFormValidity()
+    
+    if(bookIsValid){
+        
+        addBookToLibrary()
+    }
+});
     
 
 cancelBtn.addEventListener('click', cancel);
